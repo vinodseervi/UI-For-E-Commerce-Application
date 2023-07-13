@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <span>Bharat Communcation</span>
+  <span class="space-buttons"></span>
+  <button *ngIf="! isLoggedIn()" mat-raised-button routerLink="/login" color="primary">
+      Login
+  </button>
+  <button *ngIf="isLoggedIn()" mat-raised-button (click)="logout()"  color="warn">
+    Logout
+</button>
+</mat-toolbar>
+
+<mat-toolbar color="primary" *ngIf="isLoggedIn()">
+  <button mat-raised-button  color="primary" routerLink="/">Home</button>
+  <button *ngIf="isAdmin()" mat-raised-button  color="primary" routerLink="/addNewProduct">Add New Product</button>
+  <button *ngIf="isAdmin()" mat-raised-button  color="primary" routerLink="/showProductDetails">Show All Product Details</button>
+</mat-toolbar>
