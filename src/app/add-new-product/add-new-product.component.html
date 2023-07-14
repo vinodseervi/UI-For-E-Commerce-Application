@@ -1,71 +1,71 @@
 <div class="container mt-5">
-    <div class="card p-2">
-        <div class="row">
-            <div class="col-6">
-                <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
-                    <input class="form-control" type="text" placeholder="Enter Product Name" aria-label="Product Name"
-                        [(ngModel)]="product.productName" name="productName">
-                    &nbsp;
-                    <input class="form-control" type="text" placeholder="Enter Product Description"
-                        [(ngModel)]="product.productDescription" name=" productDescription"
-                        aria-label="Product Description">
-                    &nbsp;
+  <div class="card p-2">
+      <div class="row">
+          <div class="col-6">
+              <form #productForm="ngForm" (ngSubmit)="addProduct(productForm)">
+                  <input class="form-control" type="text" placeholder="Enter Product Name" aria-label="Product Name"
+                      [(ngModel)]="product.productName" name="productName">
+                  &nbsp;
+                  <input class="form-control" type="text" placeholder="Enter Product Description"
+                      [(ngModel)]="product.productDescription" name=" productDescription"
+                      aria-label="Product Description">
+                  &nbsp;
 
-                    <input class="form-control" placeholder="Enter Product Discounted Price"
-                        [(ngModel)]="product.productDiscountedPrice" name="productDiscountedPrice"
-                        aria-label="Product Discounted Price">
-                    &nbsp;
-                    <input class="form-control" placeholder="Enter Product Actual Price"
-                        [(ngModel)]="product.productActualPrice" name="productActualPrice"
-                        aria-label="Product Actual Price">
-                    &nbsp;
-
-
-                    <div align="end">
-                        <button mat-raised-button style="padding: 3p ;" color="primary">Clear</button>
-                        <button type="submit" mat-raised-button color="primary">Add Product</button>
-                    </div>
-                </form>
+                  <input class="form-control" placeholder="Enter Product Discounted Price"
+                      [(ngModel)]="product.productDiscountedPrice" name="productDiscountedPrice"
+                      aria-label="Product Discounted Price">
+                  &nbsp;
+                  <input class="form-control" placeholder="Enter Product Actual Price"
+                      [(ngModel)]="product.productActualPrice" name="productActualPrice"
+                      aria-label="Product Actual Price">
+                  &nbsp;
 
 
-            </div>
-            <div class="col-6">
-                <div>
-                    <div class="dropzone"
-                    appDrag
-                    (files)="fileDropped($event)"
-                    
-                    >
-                        
-                            <div class="text-wrapper">
-                                <div class="centered">
-                                    Drag and drop your file or 
-                                    <a (click)="selectFile.click()" class="browse-button">browse</a>
-                                    a file
-                                </div>
-                                
-                            </div>
-                    </div>
+                  <div align="end">
+                      <button mat-raised-button style="padding: 3p ;" color="primary">Clear</button>
+                      <button type="submit" mat-raised-button color="primary">Add Product</button>
+                  </div>
+              </form>
 
 
-                    <input type="file" style="display: none;" multiple value="select" #selectFile (change)="onFileSelected($event)">
-                </div>
+          </div>
+          <div class="col-6">
+              <div>
+                  <div class="dropzone"
+                  appDrag
+                  (files)="fileDropped($event)"
+                  
+                  >
+                      
+                          <div class="text-wrapper">
+                              <div class="centered">
+                                  Drag and drop your file or 
+                                  <a (click)="selectFile.click()" class="browse-button">browse</a>
+                                  a file
+                              </div>
+                              
+                          </div>
+                  </div>
 
-                <div>
-                    <div class="mt-5">
-                        <div class="row">
-                            <mat-grid-list cols="4" rowHeight="1:1">
-                                <mat-grid-tile *ngFor="let file of product.productImages; let i = index;">
-                                    <div style="position: relative;">
-                                        <span class="btn-remove-image" (click)="removeImages(i)">x</span>
-                                        <img [src]="file.url" width="100px" height="100px">
-                                    </div>
-                                </mat-grid-tile>
-                            </mat-grid-list>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
+                  <input type="file" style="display: none;" multiple value="select" #selectFile (change)="onFileSelected($event)">
+              </div>
+
+              <div>
+                  <div class="mt-5">
+                      <div class="row">
+                          <mat-grid-list cols="4" rowHeight="1:1">
+                              <mat-grid-tile *ngFor="let file of product.productImages; let i = index;">
+                                  <div style="position: relative;">
+                                      <span class="btn-remove-image" (click)="removeImage(i)">x</span>
+                                      <img [src]="file.url" width="100px" height="100px">
+                                  </div>
+                              </mat-grid-tile>
+                          </mat-grid-list>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
 </div>

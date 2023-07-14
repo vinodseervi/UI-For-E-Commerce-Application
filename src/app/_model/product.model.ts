@@ -1,10 +1,14 @@
-import { FileHandle } from "./file-handel.model";
+import { FileHandle } from "./file-handle.model";
 
 export interface Product{
-    productName : string,
-    productDescription : string,
-    productDiscountedPrice : number,
-    productActualPrice : number,
-    productImages : FileHandle[]
+    productId:any,
 
-} 
+    productName: string,
+    productDescription: string,
+    category: string,
+    quantity: any,
+    productDiscountedPrice: any,
+    productActualPrice: any,
+    productImages: FileHandle[]
+
+}

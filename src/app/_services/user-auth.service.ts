@@ -10,18 +10,20 @@ export class UserAuthService {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
-  public getRoles(): [] {
-    return JSON.parse(localStorage.getItem('roles') as string);
+  public getRoles(): Array<any> {
+    const rolesString = localStorage.getItem('roles');
+    return rolesString ? JSON.parse(rolesString) : [];
   }
+  
 
   public setToken(jwtToken: string) {
     localStorage.setItem('jwtToken', jwtToken);
   }
 
   public getToken(): string {
-    return localStorage.getItem('jwtToken') as string;
-
+    return localStorage.getItem('jwtToken')!;
   }
+  
 
   public clear() {
     localStorage.clear();
@@ -32,14 +34,12 @@ export class UserAuthService {
   }
 
   public isAdmin(){
-    const roles : any[] =this.getRoles();
-    return roles[0].roleName === 'Admin';
+    const roles:any[]= this.getRoles();
+    return roles[0].roleName==='Admin';
   }
-  
+
   public isUser(){
-    const roles : any[] = this.getRoles();
-    return roles[0].roleName === 'User';
+    const roles:any[]= this.getRoles();
+    return roles[0].roleName==='User';
   }
-
-
-}  
+}

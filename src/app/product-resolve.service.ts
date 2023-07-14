@@ -9,71 +9,38 @@ import { ImageProcessingService } from './image-processing.service';
   providedIn: 'root'
 })
 export class ProductResolveService implements Resolve<Product> {
+
   constructor(
-    private productService: ProductService,
-    private imageProcessingService: ImageProcessingService
-  ) {}
+    private productService:ProductService,
+    private imgProcessing: ImageProcessingService
+  ) { }
+  resolve(route: ActivatedRouteSnapshot,
+     state: RouterStateSnapshot)
+     :Observable<Product>  {
+    const id=route.paramMap.get("productId");
 
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Product | Observable<Product> {
-    const id = route.paramMap.get("ProductId");
     if(id){
-      //we have to fatch details to backed
-      return this.productService.getProductDetailsById(id)
-      .pipe(
-        map(p => this.imageProcessingService.createImages(p))
-      );
-
-    }else{
-      //return empty product Observable
+     return this.productService.getProductDetailsById(id)
+     .pipe(
+      map(p=>this.imgProcessing.createImages(p))
+     );
+    }
+    else{
       return of(this.getProductDetails());
     }
   }
 
   getProductDetails(){
     return{
-        productName: "",
-        productDescription: "",
-        productDiscountedPrice: 0,
-        productActualPrice: 0,
-        productImages: [],
-    }
+      productId:null,
+      productName: '',
+      productDescription: '',
+      category: '',
+      productDiscountedPrice: null,
+      productActualPrice: null,
+      productImages: [],
+      quantity:null
+    };
   }
 
-
-} 
-
-  // resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Product> {
-  //   const id = route.paramMap.get("productId");
-  //   if (id) {
-  //     // Fetch details from the backend
-  //     return this.productService.getProductDetailsById(id)
-  //       .pipe(
-  //         map((products: Product[]) => {
-  //           const product = products[0];
-  //           if (product) {
-  //             console.log(this.imageProcessingService.createImages(product));
-  //             return this.imageProcessingService.createImages(product);
-  //           } else {
-  //             return this.getProductDetails();
-  //           }
-  //         })
-  //       );
-  //   } else {
-  //     // Return an empty product observable
-  //     return of(this.getProductDetails());
-  //   }
-  // }
-  
-  
-
-  // getProductDetails(): Product {
-  //   return {
-  //     productName: "",
-  //     productDescription: "",
-  //     productDiscountedPrice: 0,
-  //     productActualPrice: 0,
-  //     productImages: []
-  //   };
-  // }
-
+}

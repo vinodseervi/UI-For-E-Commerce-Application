@@ -7,22 +7,25 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./user.component.css']
 })
 export class UserComponent implements OnInit {
+  message: any;
+ 
 
-  message:any 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService) { }
 
   ngOnInit(): void {
     this.forUser();
   }
 
   forUser() {
-    this.userService.forUser().subscribe(
+    this.userService.forUser().subscribe(         //not working
       (response) => {
         console.log(response);
         this.message = response;
-      }, 
-      (error)=>{
+      },
+      (error) => {
         console.log(error);
+
       }
     );
   }

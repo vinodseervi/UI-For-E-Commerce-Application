@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
+import { UserService } from '../_services/user.service';
 
 @Component({
   selector: 'app-admin',
@@ -6,10 +8,18 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  userRoles: any[] = [];
 
-  constructor() { }
+  constructor(
+    private router:Router
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    // this.loadUserRoles();
+  }
+  registerAdmin(){
+    this.router.navigate(['/register-admin'])
   }
 
+ 
 }

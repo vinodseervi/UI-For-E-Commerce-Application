@@ -25,13 +25,15 @@ export class HeaderComponent implements OnInit {
     this.userAuthService.clear();
     this.router.navigate(['/']);
   }
+  registerUser(){
+    this.router.navigate(['/register'])
+  }
 
   public isAdmin(){
     return this.userAuthService.isAdmin();
   }
-
   public isUser(){
     return this.userAuthService.isUser();
   }
-
+  
 }

@@ -10,6 +10,7 @@ import { UserService } from '../_services/user.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
+  errorMessage: string = '';
   constructor(
     private userService: UserService,
     private userAuthService: UserAuthService,
@@ -36,4 +37,12 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  registerUser(){
+    this.router.navigate(['/register'])
+  }
+
 }
+
+
+  
