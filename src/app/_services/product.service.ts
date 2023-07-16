@@ -57,7 +57,13 @@ export class ProductService {
     return this.httpClient.get<myOrderDetails[]>("http://localhost:9090/getOrderDetails");
   }
 
+  public getAllOrderDetailsForAdmin(status:any): Observable<myOrderDetails[]>{
+    return this.httpClient.get<myOrderDetails[]>("http://localhost:9090/getAllOrderDetails/"+status);
+  }
 
+  public markAsDelivered(orderId:any){
+    return this.httpClient.get("http://localhost:9090/markOrderAsDelivered/"+orderId);
+  }
 
 
 
