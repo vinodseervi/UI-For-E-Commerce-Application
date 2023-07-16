@@ -14,7 +14,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./show-product-details.component.css']
 })
 export class ShowProductDetailsComponent  implements OnInit {
-
+  showTable = false;
+  showLoadMoreProductButton = false;
+  pageNumber:number = 0;
   productDetails:Product[]=[];
 
   displayedColumns: string[] = ['Product Id', 'Product Name', 'Product Description', 'Product Discounted Price', 'Product Actual Price','Images','Edit','Delete'];
@@ -31,20 +33,46 @@ export class ShowProductDetailsComponent  implements OnInit {
     this.getAllProducts();
   }
 
-  public getAllProducts(){
-    this.productService.getAllProducts()
+  searchByKeyword(searchKeyword:any){
+    console.log(searchKeyword);
+    this.pageNumber = 0;
+    this.productDetails = [];
+    this.getAllProducts(searchKeyword);
+
+}
+
+  public getAllProducts(searchKey:string=""){
+    
+    this.showTable = false;
+    this.productService.getAllProducts(this.pageNumber, searchKey)
     .pipe(
       map((x:Product[],i)=>x.map((product:Product)=>this.imgProcessigService.createImages(product)))
     )
     .subscribe(
       (resp: Product[])=>{
+       // console.log(resp);
+        resp.forEach(product => this.productDetails.push(product));
+        console.log(this.productDetails);
+        this.showTable = true;
 
-        this.productDetails=resp;
+        if(resp.length == 4){
+          this.showLoadMoreProductButton = true;
+        }
+        else{
+          this.showLoadMoreProductButton = false;
+        }
+       // this.productDetails=resp;
       },
       (error:HttpErrorResponse)=>{
           console.log(error);
       }
     );
+  }
+
+  loadMoreProduct(){
+    this.pageNumber++;
+    this.getAllProducts();
+
   }
 
   deleteProducts(productId:number){

@@ -45,7 +45,7 @@
                             <td>
                                 <select
                                 #quantity
-                                class="form-selet" [ngModel]="getQuantityForProduct(product.productId)" 
+                                class="form-selet w-50" [ngModel]="getQuantityForProduct(product.productId)" 
                                 (change)="onQuantityChange(quantity.value ,product.productId)">
                                     <option value="1">1</option>
                                     <option value="2">2</option>

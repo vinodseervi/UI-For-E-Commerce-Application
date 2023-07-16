@@ -29,6 +29,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/register'])
   }
 
+  
+
   public isAdmin(){
     return this.userAuthService.isAdmin();
   }

@@ -15,9 +15,13 @@ export class BuyProductComponent implements OnInit{
   errorMessage: string = '';
   successMessage: string='';
   productDetails:Product[]=[];
+  isSingleProductCheckout:any = '';
+
 
   ngOnInit(): void {
     this.productDetails= this.activatedRoute.snapshot.data['productDetails'];
+    this.isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
+
     this.productDetails.forEach(x=> this.orderDetails.orderProductQuantityList.push(
       {productId:x.productId,quantity:5}
     ));
@@ -40,7 +44,7 @@ export class BuyProductComponent implements OnInit{
   }
 
   public placeOrder(orderForm:NgForm){
-    this.productService.placeOrder(this.orderDetails).subscribe(
+    this.productService.placeOrder(this.orderDetails, this.isSingleProductCheckout).subscribe(
       (resp: any)=>{
         console.log(resp);
         orderForm.reset();
