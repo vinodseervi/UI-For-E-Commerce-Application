@@ -19,7 +19,14 @@
                         [(ngModel)]="product.productActualPrice" name="productActualPrice"
                         aria-label="Product Actual Price">
                     &nbsp;
-  
+                    <input class="form-control" type="text" placeholder="Enter Product category"
+                        [(ngModel)]="product.category" name="category"
+                        aria-label="Product Description">
+                    &nbsp;
+                    <input class="form-control" type="text" placeholder="Enter Product quantity"
+                        [(ngModel)]="product.quantity" name="quantity"
+                        aria-label="Product Description">
+                    &nbsp;
   
                     <div align="end">
                         <button mat-raised-button style="padding: 3p ;" color="primary">Clear</button>
