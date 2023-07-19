@@ -17,56 +17,56 @@ export class ProductService {
 
 
   public addProduct(product: FormData) {
-    return this.httpClient.post<Product>("http://localhost:9090/addNewProduct", product)
+    return this.httpClient.post<Product>("http://103.116.86.167:9090/addNewProduct", product)
   }
   public getAllProducts(pageNumber: number, searchKeyword: string = "") {
-    return this.httpClient.get<Product[]>("http://localhost:9090/getAllProducts?pageNumber=" + pageNumber + "&searchKey=" + searchKeyword);
+    return this.httpClient.get<Product[]>("http://103.116.86.167:9090/getAllProducts?pageNumber=" + pageNumber + "&searchKey=" + searchKeyword);
   }
 
   public deleteProducts(productId: number) {
-    return this.httpClient.delete("http://localhost:9090/deleteProductDetails/" + productId);
+    return this.httpClient.delete("http://103.116.86.167:9090/deleteProductDetails/" + productId);
   }
 
   public getProductDetailsById(productId: string) {
-    return this.httpClient.get<Product>("http://localhost:9090/getProductDetailsById/" + productId);
+    return this.httpClient.get<Product>("http://103.116.86.167:9090/getProductDetailsById/" + productId);
 
   }
 
   public getProductDetails(isSingleProductCheckout: any, productId: any) {
-    return this.httpClient.get<Product[]>("http://localhost:9090/getProductDetails/" + isSingleProductCheckout + "/" + productId);
+    return this.httpClient.get<Product[]>("http://103.116.86.167:9090/getProductDetails/" + isSingleProductCheckout + "/" + productId);
   }
 
   public placeOrder(orderDetails: OrderDetails, isCartCheckout : any) {
-    return this.httpClient.post("http://localhost:9090/placeOrder/"+isCartCheckout , orderDetails);
+    return this.httpClient.post("http://103.116.86.167:9090/placeOrder/"+isCartCheckout , orderDetails);
   }
 
   public addToCart(productId: any) {
-    return this.httpClient.get("http://localhost:9090/addToCart/" + productId);
+    return this.httpClient.get("http://103.116.86.167:9090/addToCart/" + productId);
   }
 
   public getCartDetails() {
-    return this.httpClient.get("http://localhost:9090/getCartDetails");
+    return this.httpClient.get("http://103.116.86.167:9090/getCartDetails");
   }
 
 
   public deleteCartItem(cartId:any){
-    return this.httpClient.delete("http://localhost:9090/deleteCartItem/"+cartId);
+    return this.httpClient.delete("http://103.116.86.167:9090/deleteCartItem/"+cartId);
   }
 
   public getMyOders(): Observable<myOrderDetails[]>{
-    return this.httpClient.get<myOrderDetails[]>("http://localhost:9090/getOrderDetails");
+    return this.httpClient.get<myOrderDetails[]>("http://103.116.86.167:9090/getOrderDetails");
   }
 
   public getAllOrderDetailsForAdmin(status:any): Observable<myOrderDetails[]>{
-    return this.httpClient.get<myOrderDetails[]>("http://localhost:9090/getAllOrderDetails/"+status);
+    return this.httpClient.get<myOrderDetails[]>("http://103.116.86.167:9090/getAllOrderDetails/"+status);
   }
 
   public markAsDelivered(orderId:any){
-    return this.httpClient.get("http://localhost:9090/markOrderAsDelivered/"+orderId);
+    return this.httpClient.get("http://103.116.86.167:9090/markOrderAsDelivered/"+orderId);
   }
 
   public createTransaction(amount:number){
-    return this.httpClient.get("http://localhost:9090/createTransaction/"+amount);
+    return this.httpClient.get("http://103.116.86.167:9090/createTransaction/"+amount);
   }
 
 }

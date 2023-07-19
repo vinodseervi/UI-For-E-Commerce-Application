@@ -18,7 +18,7 @@ export class UserService {
     throw new Error('Method not implemented.'); 
   }
 
-  PATH_OF_API = 'http://localhost:9090';
+  PATH_OF_API = 'http://103.116.86.167:9090';
 
   requestHeader = new HttpHeaders({ 'No-Auth': 'True' });
   constructor(
