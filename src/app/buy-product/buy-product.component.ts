@@ -14,33 +14,33 @@ declare var Razorpay: any;
   templateUrl: './buy-product.component.html',
   styleUrls: ['./buy-product.component.css']
 })
-export class BuyProductComponent implements OnInit{
- 
+export class BuyProductComponent implements OnInit {
+
   errorMessage: string = '';
-  successMessage: string='';
-  productDetails:Product[]=[];
-  isSingleProductCheckout:any = '';
+  successMessage: string = '';
+  productDetails: Product[] = [];
+  isSingleProductCheckout: any = '';
 
 
   ngOnInit(): void {
-    this.productDetails= this.activatedRoute.snapshot.data['productDetails'];
+    this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
     this.isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
 
-    this.productDetails.forEach(x=> this.orderDetails.orderProductQuantityList.push(
-      {productId:x.productId,quantity:5}
+    this.productDetails.forEach(x => this.orderDetails.orderProductQuantityList.push(
+      { productId: x.productId, quantity: 5 }
     ));
     console.log(this.productDetails);
-     console.log(this.orderDetails);
+    console.log(this.orderDetails);
   }
   constructor(
     private activatedRoute: ActivatedRoute,
     private productService: ProductService,
     private router: Router
-  ){}
+  ) { }
 
-  orderDetails:OrderDetails={
+  orderDetails: OrderDetails = {
     fullName: '',
-    fullAddress: '', 
+    fullAddress: '',
     gmail: '',
     contactNumber: '',
     alternateContactNumber: '',
@@ -48,69 +48,69 @@ export class BuyProductComponent implements OnInit{
     orderProductQuantityList: []
   }
 
-  public placeOrder(orderForm:NgForm){
+  public placeOrder(orderForm: NgForm) {
     this.productService.placeOrder(this.orderDetails, this.isSingleProductCheckout).subscribe(
-      (resp: any)=>{
+      (resp: any) => {
         console.log(resp);
         orderForm.reset();
         this.router.navigate(["/orderConfirm"]);
       },
-      (err: any)=>{
+      (err: any) => {
         console.log(err);
       }
     );
   }
 
-  getQuantityForProduct(productId: any){
+  getQuantityForProduct(productId: any) {
     const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
       (productQuantity) => productQuantity.productId === productId
     );
-      console.log(filteredProduct[0].quantity);
+    console.log(filteredProduct[0].quantity);
     return filteredProduct[0].quantity;
 
   }
 
-  getcalculatedTotal(productId: any, productDiscountedPrice: any){
+  getcalculatedTotal(productId: any, productDiscountedPrice: any) {
     const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
       (productQuantity) => productQuantity.productId === productId
     );
 
-   return  filteredProduct[0].quantity * productDiscountedPrice;
+    return filteredProduct[0].quantity * productDiscountedPrice;
   }
 
-  onQuantityChange(q:any ,productId:any){
+  onQuantityChange(q: any, productId: any) {
     this.orderDetails.orderProductQuantityList.filter(
       (orderProduct) => orderProduct.productId === productId
     )[0].quantity = q;
   }
 
-  getCalculatedGrandTotal(){
-    let grandTotal =0;
+  getCalculatedGrandTotal() {
+    let grandTotal = 0;
     this.orderDetails.orderProductQuantityList.forEach(
       (productQuanity) => {
         const price = this.productDetails.filter(product => product.productId == productQuanity.productId)[0].productDiscountedPrice;
-       grandTotal = grandTotal +  price * productQuanity.quantity;
+        grandTotal = grandTotal + price * productQuanity.quantity;
       }
     );
 
     return grandTotal;
   }
 
-  createTransactionAndPlaceOrder(orderForm:NgForm){
+  createTransactionAndPlaceOrder(orderForm: NgForm) {
     let amount = this.getCalculatedGrandTotal();
     this.productService.createTransaction(amount).subscribe(
-      (response)=>{
+      (response) => {
         console.log(response);
         this.openTransaction(response, orderForm);
       },
-      (error)=>{
+      (error) => {
         console.log(error);
       }
 
     );
   }
 
-  openTransaction(response:any, orderForm: any){
+  openTransaction(response: any, orderForm: any) {
     var options = {
       order_id: response.orderId,
       key: response.key,
@@ -119,10 +119,10 @@ export class BuyProductComponent implements OnInit{
       name: 'Bharat Communcation',
       description: 'payment of online shopping',
       image: 'https://cdn.pixabay.com/photo/2023/07/11/08/49/cat-8119896_640.jpg',
-      handler: (response:any) =>{
-        if(response != null && response.razorpay_payment_id != null){
-        this.processPreponse(response, orderForm);
-        }else{
+      handler: (response: any) => {
+        if (response != null && response.razorpay_payment_id != null) {
+          this.processPreponse(response, orderForm);
+        } else {
           alert("Payment faild..")
         }
       },
@@ -135,20 +135,19 @@ export class BuyProductComponent implements OnInit{
         address: 'Online shopping'
       },
       theme: {
-        color :'#F37254'
+        color: '#F37254'
       }
     };
 
-   var rezorPayObject = new Razorpay(options);
-   rezorPayObject.open();
+    var rezorPayObject = new Razorpay(options);
+    rezorPayObject.open();
   }
 
-  processPreponse(resp:any, orderForm: NgForm){
+  processPreponse(resp: any, orderForm: NgForm) {
     this.orderDetails.transactionId = resp.razorpay_payment_id;
     this.placeOrder(orderForm);
     console.log(resp);
   }
-
-
+// NOW COMPLETED
 }
 
