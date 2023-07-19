@@ -6,5 +6,6 @@ export interface OrderDetails{
     gmail: String ,
     contactNumber: String ,
     alternateContactNumber: String ,
+    transactionId: string,
     orderProductQuantityList: OrderQuantity[];
 }

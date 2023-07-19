@@ -4,6 +4,10 @@ import { OrderDetails } from '../_model/order-details.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Product } from '../_model/product.model';
 import { ProductService } from '../_services/product.service';
+// import Razorpay from 'razorpay';
+
+declare var Razorpay: any;
+
 
 @Component({
   selector: 'app-buy-product',
@@ -40,6 +44,7 @@ export class BuyProductComponent implements OnInit{
     gmail: '',
     contactNumber: '',
     alternateContactNumber: '',
+    transactionId: '',
     orderProductQuantityList: []
   }
 
@@ -90,5 +95,60 @@ export class BuyProductComponent implements OnInit{
 
     return grandTotal;
   }
+
+  createTransactionAndPlaceOrder(orderForm:NgForm){
+    let amount = this.getCalculatedGrandTotal();
+    this.productService.createTransaction(amount).subscribe(
+      (response)=>{
+        console.log(response);
+        this.openTransaction(response, orderForm);
+      },
+      (error)=>{
+        console.log(error);
+      }
+
+    );
+  }
+
+  openTransaction(response:any, orderForm: any){
+    var options = {
+      order_id: response.orderId,
+      key: response.key,
+      amount: response.amount,
+      currency: response.currency,
+      name: 'Bharat Communcation',
+      description: 'payment of online shopping',
+      image: 'https://cdn.pixabay.com/photo/2023/07/11/08/49/cat-8119896_640.jpg',
+      handler: (response:any) =>{
+        if(response != null && response.razorpay_payment_id != null){
+        this.processPreponse(response, orderForm);
+        }else{
+          alert("Payment faild..")
+        }
+      },
+      prefil: {
+        name: 'LPY',
+        email: 'LPY@gmail.com',
+        contact: '90909090',
+      },
+      notes: {
+        address: 'Online shopping'
+      },
+      theme: {
+        color :'#F37254'
+      }
+    };
+
+   var rezorPayObject = new Razorpay(options);
+   rezorPayObject.open();
+  }
+
+  processPreponse(resp:any, orderForm: NgForm){
+    this.orderDetails.transactionId = resp.razorpay_payment_id;
+    this.placeOrder(orderForm);
+    console.log(resp);
+  }
+
+
 }
 
